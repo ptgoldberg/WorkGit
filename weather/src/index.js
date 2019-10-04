@@ -1,12 +1,77 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+
+class Input extends React.Component {
+
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            input_field: '',
+            items: [],
+            isLoaded: false
+        };
+    }
+
+    componentDidMount () {
+
+        fetch('http://api.openweathermap.org/data/2.5/weather?zip=98119&appid=65036b8d41536ad067f7d3079698ebcc')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    isLoaded: true,
+                    items: json,
+                })
+            });
+    }
+
+    update(event) {
+        this.setState({
+
+        })
+    }
+
+    render() {
+
+        var {isLoaded, items} = this.state;
+
+        if (!isLoaded) {
+            return <div>Loading...</div>
+        } else {
+            return (
+                <ul>
+                    {items.map(item => (
+                        <li key={item.id}>
+                            {item.name}
+                        </li>
+                        /*  <li>
+                            {item.temp} degrees Farenheit
+                        </li>
+                        <li>
+                            {item.main}
+                        </li> */
+                    ))}; 
+                </ul>
+            )
+        }
+
+        /* return(
+            <div>
+                <h4>It's weather time!</h4>
+                <input type='text'
+                value= {this.state.item_input}
+                onChange = {this.update} />
+                <button type = 'button'
+                onClick={this.add}>Search</button>
+            </div>
+        ) */
+    }
+}
+
+  ReactDOM.render(
+    <Input />,
+    document.getElementById('root')
+  );
+  
