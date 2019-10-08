@@ -20,9 +20,10 @@ class Input extends React.Component {
         fetch('http://api.openweathermap.org/data/2.5/weather?zip=98119&appid=65036b8d41536ad067f7d3079698ebcc')
             .then(res => res.json())
             .then(json => {
+                console.log(json)
                 this.setState({
                     isLoaded: true,
-                    items: json,
+                    items: json.weather,
                 })
             });
     }
@@ -38,21 +39,17 @@ class Input extends React.Component {
         var {isLoaded, items} = this.state;
 
         if (!isLoaded) {
-            return <div>Loading...</div>
+            return (
+            <div>Loading...</div>
+            )
         } else {
             return (
                 <ul>
                     {items.map(item => (
                         <li key={item.id}>
-                            {item.name}
-                        </li>
-                        /*  <li>
-                            {item.temp} degrees Farenheit
-                        </li>
-                        <li>
                             {item.main}
-                        </li> */
-                    ))}; 
+                        </li>
+                    ))}
                 </ul>
             )
         }
