@@ -43,6 +43,8 @@ class Input extends React.Component {
             <div>Loading...</div>
             )
         } else {
+            return React.createElement('ul', {}, items.map(item => 
+                React.createElement('li')))
             return (
                 <ul>
                     {items.map(item => (
