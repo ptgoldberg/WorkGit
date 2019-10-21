@@ -11,8 +11,7 @@ class Input extends React.Component {
     constructor() { 
         super();
         this.state = {
-            zip: 98119,
-            dict: {}
+            zip: 98119
         };
     }
 
@@ -32,20 +31,25 @@ class Input extends React.Component {
     }
 
     render() {
-        //var weatherArr =  ? [this.state.weather.loc, this.state.temp] : []
-        var weather = (dict) ? _.map(weatherArr, (json) => {
-            //var temperature = {json.main.temp};
-            //var far = ((temperature − 273.15) × 9/5 + 32);
+        if (!this.state.weather) {
             return <div>
-            <li>{ json.loc }</li>
-            <li>{ json.temp }</li>
+            <input ref="query" type="text" />
+            <button onClick={ (e) => {this.clicked(); }}>Search</button>
             </div>
-        }) : 
-            return <div></div>
+        }
+
+        var temp = this.state.weather.main.temp
+        temp = Math.floor(((temp - 273.15)*9/5 + 32))
+        console.log(temp)
+
         return <div>
             <input ref="query" type="text" />
             <button onClick={ (e) => {this.clicked(); }}>Search</button>
-            <ul>{ weather }</ul>
+            <pre>{ JSON.stringify(this.state.weather) }</pre>
+            <h4>{ this.state.weather.weather[0].description }</h4>
+            <h4>{temp} F</h4>
+
+            
         </div>
     }
 
@@ -54,13 +58,7 @@ class Input extends React.Component {
         Request.get(url).then((response) => {
             console.log(response.body.name);
             this.setState({
-                weather: response.body,
-                loc: response.body.name,
-                temp: response.body.temp,
-                dict: {
-                    loc: weather.name,
-                    temp: weather.temp
-                }
+                weather: response.body
             });
         });
         
