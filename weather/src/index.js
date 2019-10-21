@@ -69,4 +69,3 @@ class Input extends React.Component {
     <Input />,
     document.getElementById('root')
   );
-  
