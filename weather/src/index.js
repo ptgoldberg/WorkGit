@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Request from 'superagent';
-import _ from 'lodash';
+//import _ from 'lodash';
 
 
 class Input extends React.Component {
@@ -40,14 +40,15 @@ class Input extends React.Component {
 
         var temp = this.state.weather.main.temp
         temp = Math.floor(((temp - 273.15)*9/5 + 32))
-        console.log(temp)
 
         return <div>
-            <input ref="query" type="text" />
+            <h1>Y'all want to know the weather in {this.state.weather.name}?</h1>
+            <input ref="query" type="text" placeholder="zip code"/>
             <button onClick={ (e) => {this.clicked(); }}>Search</button>
-            <pre>{ JSON.stringify(this.state.weather) }</pre>
+            <h2>{ this.state.weather.name }</h2>
             <h4>{ this.state.weather.weather[0].description }</h4>
-            <h4>{temp} F</h4>
+            <h4>temperature: { temp }° F</h4>
+            <h4>wind speed: { this.state.weather.wind.speed } mph</h4>
 
             
         </div>
@@ -56,7 +57,6 @@ class Input extends React.Component {
     search(query = "98119") {
         var url = `http://api.openweathermap.org/data/2.5/weather?zip=${query}&appid=65036b8d41536ad067f7d3079698ebcc`;
         Request.get(url).then((response) => {
-            console.log(response.body.name);
             this.setState({
                 weather: response.body
             });
