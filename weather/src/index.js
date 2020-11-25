@@ -29,12 +29,19 @@ class Input extends React.Component {
         });
         this.search(this.refs.query.value);
     }
-
+/*
+    _handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+          console.log('do validate');
+        }
+      }
+*/
     render() {
         if (!this.state.weather) {
             return  <div>
                         <input ref="query" type="text" />
                         <button onClick={ (e) => {this.clicked(); }}>Search</button>
+                        
                     </div>
         }
 
